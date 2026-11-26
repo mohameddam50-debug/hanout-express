@@ -1,0 +1,134 @@
+HANOUT EXPRESS v1.6.11 - Windows setup
+
+IMPORTANT
+- Extract this ZIP into a NEW folder. Do not overwrite the old project folder.
+- Keep your existing Electron userData folder; it contains the SQLite database and product images.
+- This version keeps the same Electron appId and database file. It uses additive SQLite migration only.
+- Back up the existing data folder before the first run.
+
+1) Open PowerShell inside the extracted hanout-express folder.
+2) Run:
+   npm install
+   npx electron-rebuild -f -w better-sqlite3
+   npm run dev
+
+To create the Windows installer:
+   npm run dist
+
+NEW IN v1.6.1 — SIMPLE SHOP EDITION
+- The daily menu focuses on sales, products/stock, purchases, customers, suppliers, cash, expenses, reports, users and backup.
+- Advanced accounting and the accounting journal are hidden from the daily navigation. Existing accounting tables and historical data are preserved.
+- Printed invoices include a rectangular Code 39 barcode containing the invoice number.
+- Export an invoice as PDF from the last-sale action or the sales history; choose the destination and filename.
+
+NEW IN v1.6.6
+- Activity journal is now directly accessible from the administrator navigation menu.
+- Business dates use the Windows local date instead of UTC date slicing.
+- Preferred interface fonts are IBM Plex Sans Arabic and Inter (internet connection is required to fetch them unless cached).
+
+NEW IN v1.6.5
+- Fixed an unnecessary accounting-period request in the purchases screen that could show an error when opening it.
+- Export the commercial report and best-selling products to UTF-8 CSV, which opens in Excel.
+- Invalid report date ranges are rejected with a clear message.
+
+NEW IN v1.6.3
+- Product photos now appear in the products list, with a neutral icon when no photo is set.
+- The application version label is consistent across the interface.
+
+NEW IN v1.6.2
+- Search the sales history by invoice number, customer name or date.
+- Filter sales by completed, partially returned or cancelled status.
+- The list shows up to 100 recent invoices.
+
+TEST v1.6.2
+- Search for an existing invoice number and confirm the matching invoice appears.
+- Search by a customer name and test each status filter.
+- Test printing a sale and confirm the invoice number barcode is visible.
+- Export the same invoice to PDF and open the saved PDF to verify its layout and Arabic text.
+- Test sales, purchases, customer/supplier payments, cash, expenses, reports and backup/restore on a backup copy before daily use.
+
+INCLUDED IMPROVEMENTS FROM v0.6.0
+- Report collections by the actual payment date, including later customer settlements.
+- Supplier payments are also grouped by their actual payment date.
+- Gross margin and best-selling product revenue account for invoice discounts.
+- Backup always contains an images folder, even when it is empty.
+- Restore replaces the managed images folder exactly, preventing unrelated old images from remaining.
+
+INCLUDED FROM v0.9.0 — RETURNS AND CANCELLATIONS
+- Return selected quantities from a sales invoice, including partial returns.
+- Returned stock is added back automatically; services do not change stock.
+- The amount to refund is calculated after considering the remaining customer debt and previous payments.
+- Cash refunds are recorded as cash outflows and affect the cash register.
+- Full cancellation returns all remaining quantities. Original invoices and return history are retained.
+
+ALSO INCLUDED FROM v0.8.0
+- Activity journal for successful business changes, payments, cash operations, user management, login and logout.
+- The journal is available to the administrator only. Passwords and secrets are not stored in the journal.
+
+ALSO INCLUDED FROM v0.7.0
+- Local login, administrator/manager/cashier roles and module permissions.
+- Passwords stored using scrypt hashing.
+ALSO INCLUDED FROM v0.4.0
+- Customer management and account statements.
+- Cash or credit sales and partial customer debt settlement.
+- Customer payments allocated to the oldest unpaid invoices first.
+
+TEST CAREFULLY
+- First run with a copy of your database.
+- Test a partial return and verify product quantity, customer debt and cash balance.
+- Test full cancellation and verify all remaining quantities are returned and the invoice is marked cancelled.
+- Test a cash opening, one cash sale, one expense, then close the cash session.
+- Verify the theoretical balance and the difference before using it with live accounts.
+- Test report date ranges against known invoices and expenses.
+
+If any error appears, copy the full PowerShell output. Do not run npm audit fix --force.
+
+
+HANOUT EXPRESS 1.0.0
+- Le menu Paramètres contient maintenant la sauvegarde et la restauration.
+- La sauvegarde comprend la base SQLite et le dossier des images.
+- Faites une sauvegarde avant toute restauration : celle-ci remplace les données actuelles.
+
+
+FIRST LOGIN (first installation only)
+Username: admin
+Password: admin12345
+Change this password immediately from Users. Create separate accounts for staff.
+
+
+
+
+NEW IN v1.1.0 — AUTOMATIC ACCOUNTING
+- Automatic balanced journal entries for new sales, purchases, returns, customer receipts, supplier payments, expenses and cash opening.
+- Financial summary includes trial-balance totals, period income/expenses/net result, and a balance-sheet balance check.
+- Deleting an expense records a reversing entry so the accounting history is preserved.
+- Previous operations are not automatically posted retroactively. Enter opening balances and review historical transactions before relying on financial statements.
+
+TEST v1.1.0 ON A BACKUP COPY FIRST
+- Record a cash sale and a credit sale; check each journal entry is balanced.
+- Record a purchase paid partly in cash; check inventory, cash/bank and supplier accounts.
+- Receive a customer payment and pay a supplier; check receivables/payables and cash/bank.
+- Record an expense and delete it; verify that the original entry remains and a reversing entry appears.
+- Return part of a sale; verify sales-return, receivable/refund, inventory and cost-of-sales lines.
+- Review the financial summary. A balance-sheet difference may remain until opening balances and prior activity are entered.
+
+
+NEW IN v1.2.0 — GENERAL LEDGER
+- Open each active account to see its opening balance, dated journal movements, running balance, debit/credit totals and closing balance.
+- Filter the ledger by date range and export it as a UTF-8 CSV file that opens in Excel.
+- This is a read-only report; it does not modify accounting entries or historical transactions.
+
+
+NEW IN v1.3.0 — CUSTOMER/SUPPLIER RECONCILIATION
+The accounting module now compares customer invoice balances with control account 202 and supplier invoice balances with control account 201. It also lists outstanding balances by party. This is a read-only reconciliation report; differences can exist for historical transactions not automatically posted or missing opening balances.
+
+
+NEW IN v1.4.0 — FINANCIAL REPORT EXPORTS
+- Export the trial balance, income statement and balance sheet together to UTF-8 CSV for Excel.
+- Export the general journal for the selected date range to CSV.
+- Existing general-ledger account export remains available.
+- Exports are read-only and do not alter accounting data.
+
+
+VERSION 1.5.0 — GESTION DE L'EXERCICE
+La section comptable permet de définir les dates de l'exercice et d'exécuter un contrôle préliminaire des journaux. Ce contrôle ne réalise pas de clôture définitive. Effectuer une sauvegarde et rapprocher caisse, banque, stock, clients et fournisseurs avant toute clôture comptable.
